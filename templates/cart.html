@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Cart</h3>
+
+{% if items %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>Pet</th><th>Qty</th><th>Subtotal</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for it in items %}
+    <tr>
+      <td>{{ it.pet.name }}</td>
+      <td>{{ it.qty }}</td>
+      <td>₹{{ '%.2f'|format(it.subtotal) }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<p><strong>Total: ₹{{ '%.2f'|format(total) }}</strong></p>
+
+<form method="post" action="{{ url_for('checkout') }}">
+  <button class="btn btn-primary">Checkout</button>
+</form>
+
+<form method="post" action="{{ url_for('cart_clear') }}" class="mt-2">
+  <button class="btn btn-link">Clear Cart</button>
+</form>
+
+{% else %}
+<p class="text-muted">Cart is empty. <a href="{{ url_for('pets') }}">Browse Pets</a></p>
+{% endif %}
+{% endblock %}

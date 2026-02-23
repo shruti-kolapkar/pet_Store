@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Pets</h3>
+
+<form class="row g-2 mb-3">
+  <div class="col-md-4">
+    <input name="q" value="{{ q }}" class="form-control" placeholder="Search name">
+  </div>
+  <div class="col-md-3">
+    <input name="species" value="{{ species }}" class="form-control" placeholder="Species">
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-primary">Search</button>
+  </div>
+</form>
+
+<table class="table table-striped">
+<thead>
+  <tr>
+    <th>Name</th><th>Species</th><th>Price</th><th>Stock</th><th></th>
+  </tr>
+</thead>
+<tbody>
+  {% for p in pets %}
+  <tr>
+    <td>{{ p.name }}</td>
+    <td>{{ p.species }}</td>
+    <td>₹{{ '%.2f'|format(p.price) }}</td>
+    <td>{{ p.stock }}</td>
+    <td><a class="btn btn-sm btn-outline-primary" href="{{ url_for('product', pet_id=p.id) }}">Details</a></td>
+  </tr>
+  {% endfor %}
+</tbody>
+</table>
+{% endblock %}
